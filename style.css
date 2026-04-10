@@ -1,0 +1,896 @@
+body {
+  background-color: #000814;
+  margin: 0;
+  padding: 0;
+}
+
+.flixly-logo {
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
+.flixly-nav {
+  background-color: rgba(2, 48, 71, 0);
+  transition: background-color 0.2s linear;
+}
+
+.flixly-nav .nav-link {
+  color: #caf0f8;
+  font-weight: 500;
+  padding: 8px 12px;
+}
+
+.flixly-nav .nav-link:hover {
+  color: #ffb703;
+}
+
+.nav-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  font-size: 1rem;
+  color: #caf0f8;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.search-slide-input {
+  position: absolute;
+  right: 100%;
+  width: 0;
+  opacity: 0;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  transition: all 0.4s ease;
+}
+
+.search-slide-input::placeholder {
+  color: #caf0f8;
+  opacity: 0.7;
+}
+
+.nav-search-wrapper:hover .search-slide-input,
+.search-slide-input:focus {
+  width: 220px;
+  opacity: 1;
+}
+
+.movie-meta {
+  margin-top: 10px;
+  color: #90e0ef;
+  font-size: 0.95rem;
+  font-weight: 200;
+}
+
+.hero-info {
+  max-width: 40%;
+  padding: 22px 26px;
+  border-radius: 10px;
+}
+
+.hero-info h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #caf0f8;
+  text-shadow: 0 4px 12px rgba(3, 4, 94, 0.9);
+}
+
+.hero-info p {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #ade8f4;
+  white-space: normal;
+  word-break: break-word;
+  text-shadow: 0 2px 6px rgba(3, 4, 94, 0.8);
+}
+
+
+
+.hero-controls {
+  position: absolute;
+  right: 30px;
+  bottom: 170px;
+  z-index: 3;
+}
+
+.hero-video {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-poster {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.hero-video video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0));
+}
+
+#playBtn {
+  background: linear-gradient(130deg, #19179bed, #fb8500);
+  border: none;
+  color: #023047;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s ease;
+}
+
+#playBtn:hover {
+  transform: scale(1.05);
+}
+
+.player-wrapper {
+  position: fixed;
+  inset: 0;
+  background: black;
+}
+
+.player-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.top-bar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #caf0f8;
+  font-size: large;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  padding: 6px 10px;
+  border-radius: 50%;
+}
+
+.center-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  color: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.seek-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.6);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  font-size: 4.5rem;
+  color: #c2bfbfd1;
+}
+
+.seek-indicator.left {
+  left: 10%;
+}
+
+.seek-indicator.right {
+  right: 10%;
+}
+
+.seek-indicator.show {
+  animation: seekGlow 0.8s ease forwards;
+}
+
+@keyframes seekGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.5);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.controls {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+  padding: 12px 20px;
+}
+
+#progressBar {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-bottom: 15px;
+  width: 90%;
+  height: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(to right,
+      #ff9a03 var(--progress, 0%),
+      rgba(255, 255, 255, 0.25) 0%);
+  transition: height 0.2s ease;
+}
+
+#progressBar:hover {
+  height: 6px;
+}
+
+#progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffb703;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#progressBar:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+#progressBar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffb703;
+  border: none;
+}
+
+.controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 33px;
+}
+
+.left-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.volume-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+#volumeBar {
+  width: 0;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.volume-wrapper:hover #volumeBar {
+  width: 80px;
+  opacity: 1;
+}
+
+:fullscreen .player-wrapper,
+.player-wrapper:fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+}
+
+:fullscreen video,
+.player-wrapper:fullscreen video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+:fullscreen .controls,
+.player-wrapper:fullscreen .controls {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
+}
+
+:fullscreen .top-bar,
+.player-wrapper:fullscreen .top-bar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+}
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.progress-wrapper #progressBar {
+  flex: 1;
+}
+
+.remaining-time {
+  font-size: 1rem;
+  color: #ade8f4;
+  opacity: 0.85;
+  white-space: nowrap;
+  margin-bottom: 15px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  user-select: none;
+}
+
+.controls,
+.top-bar {
+  transition: opacity 0.4s ease;
+}
+
+.player-wrapper.hide-ui .controls,
+.player-wrapper.hide-ui .top-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player-wrapper.hide-ui {
+  cursor: none;
+}
+
+.player-wrapper:fullscreen.hide-ui,
+:fullscreen .player-wrapper.hide-ui {
+  cursor: none !important;
+}
+
+.top-bar button,
+.controls button {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.top-bar button:hover,
+.controls button:hover {
+  transform: scale(1.18);
+}
+
+#playPause:hover {
+  transform: scale(1.35);
+}
+
+#fullscreenBtn:hover {
+  transform: scale(1.25);
+}
+
+.card-layer {
+  position: relative;
+  margin-top: -175px;
+  padding-top: 30px;
+  z-index: 3;
+}
+
+/* spacing for subsequent rows sections to avoid overlap */
+.card-layer+.card-layer {
+  margin-top: 250px;
+  padding-top: 0;
+}
+
+
+.home-bg {
+  background-color: #000814;
+  min-height: 40vh;
+}
+
+.movie-row {
+  margin-bottom: -205px;
+}
+
+.row-title {
+  color: #caf0f8;
+  font-weight: 600;
+  margin-bottom: 14px;
+  padding-left: 60px;
+}
+
+.movie-cards {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.movie-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.movie-cards::before,
+.movie-cards::after {
+  content: "";
+  flex: 0 0 40px;
+}
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+  position: relative;
+  transition: width 0.4s ease, height 0.4s ease;
+  cursor: pointer;
+}
+
+
+
+.card-actions-left .btn {
+  margin-right: 6px;
+}
+
+.card-actions-right .btn {
+  margin-left: 6px;
+}
+
+.card-poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #000;
+  transition: height 0.35s ease;
+}
+
+.card-poster img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-position: center center;
+}
+
+.poster-vertical {
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.movie-card:hover .poster-vertical {
+  opacity: 0;
+  transition-delay: 0.25s;
+}
+
+.poster-horizontal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* Play button specific style */
+.play-btn {
+  background: white !important;
+  color: black !important;
+  border-color: white !important;
+}
+
+.play-btn:hover {
+  background: #e6e6e6 !important;
+}
+
+.card-meta-data {
+  margin-top: 4px;
+}
+
+.meta-line {
+  display: block;
+  font-size: 0.8rem;
+  color: #ffb703;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.meta-line .runtime {
+  color: #a3a3a3;
+  margin-right: 6px;
+}
+
+.genre-line {
+  display: block;
+  font-size: 0.75rem;
+  color: #caf0f8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  opacity: 0;
+  color: #caf0f8;
+  /* Gradient shadow (scrim) for readability */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  transition: height 0.35s ease, opacity 0.25s ease;
+  z-index: 2;
+}
+
+.movie-card:hover {
+  width: 530px;
+  height: 300px;
+  transition-delay: 0.25s;
+}
+
+.movie-card:not(:hover) {
+  transition-delay: 0.25s;
+}
+
+.movie-card:hover .card-poster {
+  transition-delay: 0.25s;
+}
+
+.movie-card:not(:hover) .card-poster {
+  transition-delay: 0.25s;
+}
+
+.movie-card:hover .poster-horizontal {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition-delay: 0.25s;
+}
+
+.movie-card:hover .card-info {
+  height: 110px;
+  opacity: 1;
+  padding: 12px;
+  transition-delay: 0.25s;
+}
+
+.movie-card:not(:hover) .poster-horizontal,
+.movie-card:not(:hover) .poster-vertical,
+.movie-card:not(:hover) .card-info {
+  transition-delay: 0.25s;
+}
+
+.search-results {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 320px;
+  background: #000814;
+  border-radius: 8px;
+  padding: 8px;
+  display: none;
+  z-index: 9999;
+}
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  color: #caf0f8;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.search-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-item img {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.details-media {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.details-poster {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.details-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  display: none;
+}
+
+.details-modal .modal-content {
+  background: #001d3d;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #caf0f8;
+}
+
+.details-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.details-mute {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 3;
+}
+
+
+
+
+
+
+
+.expand-episodes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.expand-episode-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 14px;
+  border-radius: 8px;
+  background: transparent;
+  color: #caf0f8;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease;
+}
+
+.expand-episode-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.expand-episode-item:last-child {
+  border-bottom: none;
+}
+
+.expand-episode-item .episode-number {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #8d99ae;
+  margin-right: 20px;
+  min-width: 40px;
+  text-align: center;
+  align-self: center;
+}
+
+.episode-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.episode-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.episode-runtime {
+  font-size: 0.85rem;
+  color: #a3a3a3;
+}
+
+.episode-desc {
+  font-size: 0.85rem;
+  color: #b0c4de;
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.series-panel {
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  width: 340px;
+  max-height: 70vh;
+  background: rgba(0, 8, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px;
+  display: none;
+  overflow: auto;
+  z-index: 999;
+}
+
+.season-header {
+  font-weight: 600;
+  color: #caf0f8;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.season-list {
+  display: none;
+  margin-bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.season-chip {
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ade8f4;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.season-chip.active,
+.season-chip:hover {
+  background: #ffb703;
+  color: #001219;
+}
+
+.episode-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.episode-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #caf0f8;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+.episode-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.episode-item.active {
+  background: #023e8a;
+}
+
+.episode-item .episode-number {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ade8f4;
+  font-weight: 600;
+}
+
+.episode-title {
+  flex: 1;
+}
+
+
+
+
+/* Watchlist Grid Layout */
+.watchlist-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 20px 60px;
+  justify-content: flex-start;
+}
+
+/* Ensure hovered card sits on top in grid but stays in flow */
+.movie-card.grid-view:hover {
+  z-index: 1000;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  /* The default .movie-card:hover handles width/height expansion */
+}
+/* Fix overlap on Category View pages where no Hero Video exists */
+.category-view-container .card-layer:first-of-type {
+  margin-top: 0;
+}
